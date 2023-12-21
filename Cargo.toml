@@ -1,0 +1,28 @@
+[package]
+name = "timematorsync"
+description = "A tool to upload time entries from Timemator to the HiWi time tracking system at the i11 chair for embedded systems of RWTH Aachen University"
+version = "1.0.0"
+edition = "2021"
+
+[lib]
+name = "timetracksync"
+path = "src/lib.rs"
+
+[[bin]]
+name = "timetracksync"
+path = "src/main.rs"
+
+[dependencies]
+anyhow = "1.0.75"
+chrono = { version = "0.4.31", features = ["serde"] }
+clap = { version = "4.4.7", features = ["derive"] }
+clap-stdin = "0.2.1"
+csv = "1.3.0"
+dotenvy = "0.15.7"
+itertools = "0.11.0"
+log = "0.4.20"
+reqwest = { version = "0.11.22", features = ["blocking", "json"] }
+serde = { version = "1.0", features = ["derive"] }
+simplelog = "0.12.1"
+teloxide = { version = "0.12.2", features = ["macros"] }
+tokio = { version = "1.33.0", features = ["rt-multi-thread", "macros", "rt"] }
