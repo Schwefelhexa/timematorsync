@@ -17,6 +17,7 @@ pub struct Record {
     pub task: String,
     pub hourly_rate: Option<f32>,
     pub billing_status: Option<BillingStatus>,
+    pub notes: Option<String>,
 }
 
 fn deserialize_datetime<'de, D>(deserializer: D) -> Result<DateTime<Local>, D::Error>
@@ -207,11 +208,11 @@ pub async fn upload(records: Vec<Record>, username: &str, password: &str) -> Res
     for record in to_upload {
         debug!("Uploading record: {:?}", record);
 
-        // TODO: Take dynamic segment from entry
         let note = format!(
-            "{}: {}\n\nUploaded by: {} v{} [{} UTC]",
+            "{}: {}{}\n\nUploaded by: {} v{} [{} UTC]",
             record.folder,
             record.task,
+            record.notes.clone().map(|n| format!("\n{}", n)).unwrap_or_default(),
             env!("CARGO_PKG_NAME"),
             env!("CARGO_PKG_VERSION"),
             Utc::now().format("%Y-%m-%d %H:%M:%S")
